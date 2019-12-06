@@ -7,7 +7,7 @@ class Pessoa:
         self.filhos = list(filhos)
 
     def cumprimentar(self):
-        return  f'Olá {id(self)}'
+        return  f'Olá, meu nome é  {self.nome}'
 
     @staticmethod
     def metodo_estatico():
@@ -18,27 +18,42 @@ class Pessoa:
         return f'{cls} - olhos {cls.olhos}'
 
 
-if __name__ == '__main__':
-    maria = Pessoa(nome='Maria')
-    adriana = Pessoa(maria, nome='Adriana')
-    print(Pessoa.cumprimentar(adriana))
-    print(id(adriana))
-    print(adriana.cumprimentar())
-    print(adriana.nome)
-    print(adriana.idade)
-    for filho in adriana.filhos:
-        print(filho.nome)
-    adriana.sobrenome = 'Torres'
-    del adriana.filhos
-    adriana.olhos = 1
-    del adriana.olhos
-    print(adriana.__dict__)
-    print(maria.__dict__)
-    Pessoa.olhos = 3
-    print(Pessoa.olhos)
-    print(adriana.olhos)
-    print(maria.olhos)
-    print(id(Pessoa.olhos), id(adriana.olhos), id(maria.olhos))
-    print(Pessoa.metodo_estatico(), adriana.metodo_estatico())
-    print(Pessoa.nome_e_atributos_de_classes(), adriana.nome_e_atributos_de_classes())
+class Homem(Pessoa):
+    def cumprimentar(self):
+        cumprimentar_da_classe=super().cumprimentar()
+        return f'{cumprimentar_da_classe}. Aperto de mão'
 
+class Mutante(Pessoa):
+    olhos = 3
+
+
+if __name__ == '__main__':
+    eduardo = Homem(nome='Eduardo')
+    carlos = Mutante(eduardo, nome='Carlos')
+    print(Pessoa.cumprimentar(carlos))
+    print(id(carlos))
+    print(carlos.cumprimentar())
+    print(carlos.nome)
+    print(carlos.idade)
+    for filho in carlos.filhos:
+        print(filho.nome)
+    carlos.sobrenome = 'Torres'
+    del carlos.filhos
+    carlos.olhos = 1
+    del carlos.olhos
+    print(carlos.__dict__)
+    print(eduardo.__dict__)
+    print(Pessoa.olhos)
+    print(carlos.olhos)
+    print(eduardo.olhos)
+    print(id(Pessoa.olhos), id(carlos.olhos), id(eduardo.olhos))
+    print(Pessoa.metodo_estatico(), carlos.metodo_estatico())
+    print(Pessoa.nome_e_atributos_de_classes(), carlos.nome_e_atributos_de_classes())
+    pessoa = Pessoa('Anonimo')
+    print(isinstance(pessoa, Pessoa))
+    print(isinstance(pessoa, Homem))
+    print(isinstance(carlos, Pessoa))
+    print(isinstance(carlos, Homem))
+    print(carlos.olhos)
+    print(eduardo.cumprimentar())
+    print(carlos.cumprimentar())
